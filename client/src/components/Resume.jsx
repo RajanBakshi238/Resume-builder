@@ -1,9 +1,21 @@
-import React from 'react'
+import React from "react";
+import ErrorPage from "./ErrorPage";
 
-const Resume = () => {
+const Resume = ({ result }) => {
+  if (JSON.stringify(result) === "{}") {
+    return <ErrorPage />;
+  }
+
+  const handlePrint = () => alert("Print Successfully");
+
   return (
-    <div>Resume</div>
-  )
-}
+    <>
+      <button onClick={handlePrint}>Print Page</button>
+      <main className="container">
+        <p>Hello!</p>
+      </main>
+    </>
+  );
+};
 
-export default Resume
+export default Resume;
