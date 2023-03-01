@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+import axios from "axios";
+
 import Loading from "./Loading";
+import { Navigate } from "react-router-dom";
+
 
 const Home = () => {
   const [fullName, setFullName] = useState("");
@@ -14,13 +18,29 @@ const Home = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log({
-      fullName,
-      currentPosition,
-      currentLength,
-      currentTechnologies,
-      headshot,
-    });
+    
+    const formData =  new FormData();
+    formData.append("headshotImage", headshot, headshot.name);
+    formData.append("fullName", fullName);
+    formData.append("currentPosition", currentPosition);
+    formData.append("currentLength", currentLength);
+    formData.append("currentTechnologies", currentTechnologies);
+    formData.append("workHistory", JSON.stringify(companyInfo));
+    
+    axios.post("http://localhost:4004/resume/create", formData, {}).then((res) => {
+      if(res.data.message){
+        console.log(res.data.data);
+        Navigate("/resume")
+      }
+    }).catch((err) => console.log(err))
+    
+    // console.log({
+    //   fullName,
+    //   currentPosition,
+    //   currentLength,
+    //   currentTechnologies,
+    //   headshot,
+    // });
     setLoading(true);
   };
 

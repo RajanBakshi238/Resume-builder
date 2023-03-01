@@ -1,3 +1,4 @@
+const { Configuration, OpenAIApi } = require("openai");
 const multer = require("multer");
 const path = require("path");
 
@@ -5,6 +6,12 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const PORT = 4004;
+
+const configuration = new Configuration({
+  apiKey: "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",
+});
+
+const openai = new OpenAIApi(configuration); 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
