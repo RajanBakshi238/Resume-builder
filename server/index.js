@@ -13,6 +13,21 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration); 
 
+const GPTFunction = async (text) => {
+  const response = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: text,
+    temperature: 0.6,
+    max_tokens: 250,
+    top_p: 1,
+    frequency_penalty: 1,
+    presence_penalty: 1,
+  })
+
+  return response.data.choices[0].text;
+}
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
@@ -45,7 +60,7 @@ app.post("/resume/create", upload.single("headshotImage"), async (req, res) => {
     currentPosition,
     currentLength,
     currentTechnologies,
-    workHistory,
+    workHistory, // JSON format
   } = req.body;
 
   console.log(req.body);
