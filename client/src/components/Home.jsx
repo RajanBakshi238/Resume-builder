@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import Loading from "./Loading";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const Home = ({setResult}) => {
+  const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
   const [currentPosition, setCurrentPosition] = useState("");
   const [currentLength, setCurrentLength] = useState(1);
@@ -31,7 +32,7 @@ const Home = ({setResult}) => {
       if(res.data.message){
         setResult(res.data.data)
         console.log(res.data.data);
-        Navigate("/resume")
+        navigate("/resume")
       }
     }).catch((err) => console.log(err))
     
