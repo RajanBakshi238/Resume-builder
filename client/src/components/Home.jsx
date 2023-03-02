@@ -5,7 +5,7 @@ import Loading from "./Loading";
 import { Navigate } from "react-router-dom";
 
 
-const Home = () => {
+const Home = ({setResult}) => {
   const [fullName, setFullName] = useState("");
   const [currentPosition, setCurrentPosition] = useState("");
   const [currentLength, setCurrentLength] = useState(1);
@@ -29,6 +29,7 @@ const Home = () => {
     
     axios.post("http://localhost:4004/resume/create", formData, {}).then((res) => {
       if(res.data.message){
+        setResult(res.data.data)
         console.log(res.data.data);
         Navigate("/resume")
       }
@@ -41,7 +42,7 @@ const Home = () => {
     //   currentTechnologies,
     //   headshot,
     // });
-    setLoading(true);
+    setLoading(true); 
   };
 
   const handleUpdateCompany = (e, index) => {
